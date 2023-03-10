@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TatBlog.Core.Entities;
 
-namespace TatBlog.Core.DTO;
-
-public class TagItem
+namespace TatBlog.Core.DTO
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string UrlSlug { get; set; }
-    public string Description { get; set; }
-    public int PostCount { get; set; }
-}
+    public class TagItem
+    {
+        public int Id { get; set; }
 
+        public string Name { get; set; }
+
+        public string UrlSlug { get; set; }
+
+        public string Description { get; set; }
+
+        public int PostCount { get; set; }
+    }
+}
