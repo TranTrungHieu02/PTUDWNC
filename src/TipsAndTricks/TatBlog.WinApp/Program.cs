@@ -1,5 +1,5 @@
 ﻿using Mapster;
-using TatBlog.Core.Constants;
+using TatBlog.Core.Contracts;
 using TatBlog.Core.DTO;
 using TatBlog.Core.Entities;
 using TatBlog.Data.Contexts;
@@ -128,10 +128,10 @@ IAuthorRepository authorRepo = new AuthorRepository(context);
 ////Tạo đối tượng chứa tham số phân trang
 //var pagingParams = new PagingParams
 //{
-//    PageNumber = 3,         
-//    PageSize = 5,           
-//    SortColumn = "Name",    
-//    SortOrder = "DESC"      
+//    PageNumber = 3,         //Lấy kết quả ở trang số 3
+//    PageSize = 5,           //Lấy 5 mẫu tin
+//    SortColumn = "Name",    //Sắp xếp theo tên
+//    SortOrder = "DESC"      //Theo chiều giảm dần
 //};
 
 ////Lấy danh sách từ khóa
@@ -370,8 +370,8 @@ var pagingParamsAuthor = new PagingParams
 #region AddOrUpdateAuthor
 //var authorAdd = new Author()
 //{
-//    FullName = "Tran Trung Hieu",
-//    UrlSlug = "Trung-Hieu",
+//    FullName = "TranTrungHieu",
+//    UrlSlug = "tien-nguyen",
 //    Email = "TrungHieu@gmail.com",
 //    JoinedDate = new DateTime(2023, 3, 6)
 //};
@@ -403,12 +403,12 @@ ISubscriberRepository subscribersRepo = new SubscriberRepository(context);
 #endregion
 
 #region NewSubscriber
-//var newSubscriber = await subscribersRepo.SubscribeAsync("BaalBu@gmail.com");
+//var newSubscriber = await subscribersRepo.SubscribeAsync("Baal@gmail.com");
 //Console.WriteLine(newSubscriber);
 #endregion
 
 #region Unsubscribe
-//Console.WriteLine(await subscribersRepo.UnsubscribeAsync("Raiden@gmail.com", "Unsubscribe", true));
+//Console.WriteLine(await subscribersRepo.UnsubscribeAsync("Huy@gmail.com", "Unsubscribe", true));
 #endregion
 
 #region BlockSubscribe
@@ -429,7 +429,7 @@ IPagingParams pagingParamsSubscriber = new PagingParams()
 };
 
 var subscribersSearch = await subscribersRepo
-  .SearchSubscribersAsync(pagingParamsSubscriber, "hieu", false, false);
+  .SearchSubscribersAsync(pagingParamsSubscriber, "tien", false, false);
 
 foreach (var subscriber in subscribersSearch)
 {
