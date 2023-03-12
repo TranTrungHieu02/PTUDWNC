@@ -1,0 +1,38 @@
+﻿@model IPagedList<Post>
+
+@{
+    ViewData["PageTitle"] = "Trang chủ";
+
+    var postQuery = (ViewBag.PostQuery as PostQuery) ?? new PostQuery();
+}
+
+<div class="p-4">
+    @if (!string.IsNullOrWhiteSpace(postQuery.KeyWord))
+    {
+        <h3 class="text-primary mb-3">
+            Những bài viết chứa từ khóa '@postQuery.KeyWord'
+        </h3>
+    }
+    @if(postQuery.CategorySlug != null 
+    || postQuery.AuthorSlug != null
+    || postQuery.TagSlug != null)
+    {
+        <h3 class="text-primary mb-3">
+            @ViewData["Title"]
+        </h3>
+    }
+    @if(Model.Count > 0)
+    {
+        @foreach (var post in Model)
+        {
+            <partial name="_PostList" model="@post" />
+        }
+    }  
+    else
+    {
+        <h1 class="text-center">
+            Không tìm thấy bài viết nào
+        </h1>
+    }
+    <partial name="_Pager" model="@Model" />
+</div>
