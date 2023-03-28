@@ -2,7 +2,7 @@
 
 @{
     var imageUrl = string.IsNullOrWhiteSpace(Model.ImageUrl)
-        ? "/images/bg.jpg"
+        ? "/images/asp.net-image.jpg"
         : $"/{Model.ImageUrl}";
 }
 
@@ -42,6 +42,14 @@
                           asp-route-slug="@Model.Category.UrlSlug"
                           class="text-decoration-none">
                         @Model.Category.Name
+                    </a>
+                    <small class="text-muted">
+                        Ngày đăng:
+                    </small>
+                    <a asp-controller="Blog"
+                       asp-route-slug="@Model.PostedDate"
+                       class="text-decoration-none">
+                        @Model.PostedDate.ToString("dd/MM/yyyy")
                     </a>
                 </p>
 

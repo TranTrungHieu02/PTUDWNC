@@ -15,17 +15,18 @@ namespace TatBlog.WebApp.Controllers
             _blogRepository = blogRepository;
             _authorRepository = authorRepository;
         }
-        
+        //Action này xử lý HTTP request đến trang chủ của
+        //ứng dụng web hoặc tìm kiếm bài viết theo từ khóa
         [HttpGet]
         public async Task<IActionResult> Index(
             [FromQuery(Name = "k")] string keyword = null,
             [FromQuery(Name ="p")] int pageNumber = 1,
             [FromQuery(Name ="ps")] int pageSize =10)
         {
-            
+            //Tạo đối tượng chứa các điều kiện truy vấn
             var postQuery = new PostQuery()
             {
-                
+                //Chỉ lấy những bài viết có trạng thái Published
                 PublishedOnly = true,
                 KeyWord = keyword,
             };
@@ -90,6 +91,43 @@ namespace TatBlog.WebApp.Controllers
             ViewBag.Title = $"Các bài viết có tag '{postQuery.TagName}'";
             return View("Index", postsList);
         }
+        public async Task<IActionResult> Post(
+            int year,
+            int month,
+            int day,
+            string slug)
+        {
+            var posts = await _blogRepository.GetPostAsync(year, month, slug);
+            if(posts == null)
+            {
+                ViewBag.Title = $"Không có bài viết nào có '{slug}'";
+            }
+            if(!posts.Published)
+            {
+                ViewBag.Title = $"Bài viết có '{slug}' chưa được công bố";
+            }
+            await _blogRepository.IncreaseViewCountAsync(posts.Id);
+            return View("PostInfo", posts);
+        }
+
+        public async Task<IActionResult> Archive(
+            [FromQuery(Name = "month")] int month,
+            [FromQuery(Name = "year")] int year,
+            [FromQuery(Name = "p")] int pageNumber = 1,
+            [FromQuery(Name = "ps")] int pageSize = 10)
+        {
+            var postQuery = new PostQuery()
+            {
+                PostMonth = month,
+                PostYear = year
+            };
+            IPagingParams pagingParams = CreatePagingParamsForPost(pageNumber, pageSize);
+            var posts = await _blogRepository.GetPagesPostQueryAsync(postQuery, pagingParams);
+            ViewBag.PostQuery = postQuery;
+            ViewBag.Title = $"Các bài viết của tháng {postQuery.PostMonth} và của năm {postQuery.PostYear}";
+            return View("Index", posts);
+        }
+
         public IActionResult About() => View();
         public IActionResult Contact() => View();
         public IActionResult Rss() => Content("Nội dung sẽ được cập nhật");

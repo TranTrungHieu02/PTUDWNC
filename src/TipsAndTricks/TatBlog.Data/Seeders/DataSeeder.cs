@@ -28,7 +28,7 @@ namespace TatBlog.Data.Seeders
             var posts = AddPosts(authors, categories, tags);
         }
 
-        private IList<Author> AddAuthors()
+        private IList<Author> AddAuthors() 
         {
             var authors = new List<Author>()
             {
@@ -42,8 +42,7 @@ namespace TatBlog.Data.Seeders
                 new()
                 {
                     FullName = "Jessica Wonder",
-                    UrlSlug = "jessica-wonder",
-                    Email = "jessica665@motip.com",
+                      Email = "jessica665@motip.com",
                     JoinedDate = new DateTime(2020, 4, 19)
                 },
                 new()
@@ -53,8 +52,27 @@ namespace TatBlog.Data.Seeders
                     Email = "johnwas098@gmail.com",
                     JoinedDate = new DateTime(2021, 12, 24)
                 },
-
-
+                 new()
+                {
+                    FullName = "Kamisato Ayaka",
+                    UrlSlug = "ksmi-yaya",
+                    Email = "Ayaya@gmail.com",
+                    JoinedDate = new DateTime(2021, 4, 12)
+                },
+                  new()
+                {
+                    FullName = "Raiden Shogun",
+                    UrlSlug = "raiden-shogun",
+                    Email = "baal@gmail.com",
+                    JoinedDate = new DateTime(2019, 1, 25)
+                },
+                   new()
+                {
+                    FullName = "Xiao Changmeng",
+                    UrlSlug = "xiao-changmeng",
+                    Email = "xiaono1@gmail.com",
+                    JoinedDate = new DateTime(2021, 12, 24)
+                },
             };
             _dbContext.Authors.AddRange(authors);
             _dbContext.SaveChanges();
@@ -62,7 +80,7 @@ namespace TatBlog.Data.Seeders
             return authors;
         }
 
-        private IList<Category> AddCategories()
+        private IList<Category> AddCategories() 
         {
             var categories = new List<Category>()
             {
@@ -80,12 +98,33 @@ namespace TatBlog.Data.Seeders
                     UrlSlug = "architecture",
                     ShowOnMenu = true
                 },
-
+                
                 new()
                 {
                     Name = "Java",
                     Description = "Java",
                     UrlSlug = "java",
+                    ShowOnMenu = true
+                },
+                new()
+                {
+                    Name = "Lol",
+                    Description ="Lien minh",
+                    UrlSlug = "lol",
+                    ShowOnMenu = true
+                },
+                new()
+                {
+                    Name = "GI",
+                    Description = "Genshin",
+                    UrlSlug = "GI",
+                    ShowOnMenu = true
+                },
+                new()
+                {
+                    Name = "HonKa",
+                    Description = "Honkai Impact",
+                    UrlSlug = "HonKa",
                     ShowOnMenu = true
                 },
 
@@ -97,7 +136,7 @@ namespace TatBlog.Data.Seeders
             return categories;
         }
 
-        private IList<Tag> AddTags()
+        private IList<Tag> AddTags() 
         {
             var tags = new List<Tag>()
             {
@@ -107,21 +146,21 @@ namespace TatBlog.Data.Seeders
                     Description = "Google applications",
                     UrlSlug = "google"
                 },
-
+                
                 new()
                 {
                     Name = "JavaScript",
                     Description = "JavaScript",
                     UrlSlug = "javascript"
                 },
-
+                
                 new()
                 {
                     Name = "Java",
                     Description = "Java",
                     UrlSlug = "java"
                 },
-
+               
             };
 
             _dbContext.AddRange(tags);
@@ -155,7 +194,7 @@ namespace TatBlog.Data.Seeders
                         tags[1]
                     }
                 },
-
+                
                 new()
                 {
                     Title = "Java Everywhere Again with DukeScript",
@@ -174,7 +213,44 @@ namespace TatBlog.Data.Seeders
                         tags[2]
                     }
                 },
+                
+                new()
+                {
+                    Title = "Learning Java",
+                    ShortDescription = "Java is a class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible",
+                    Description = "Java Learning",
+                    Meta = "Java is a class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible",
+                    UrlSlug = "learning-java",
+                    Published = true,
+                    PostedDate = new DateTime(2019,7,12,10,20,0),
+                    ModifiedDate = null,
+                    ViewCount = 41,
+                    Author = authors[3],
+                    Category = categories[7],
+                    Tags = new List<Tag>()
+                    {
+                        tags[3]
+                    }
+                },
 
+                new()
+                {
+                    Title = "Genshin Impact",
+                    ShortDescription = "Genshin Impact is an open-world, action role-playing game that allows the player to control one of four interchangeable characters in a party",
+                    Description = "What is Genshin ",
+                    Meta = "Switching between characters can be done quickly during combat, allowing the player to use several different combinations of skills and attacks",
+                    UrlSlug = "GenshinIm",
+                    Published = true,
+                    PostedDate = new DateTime(2019,7,12,10,20,0),
+                    ModifiedDate = null,
+                    ViewCount = 41,
+                    Author = authors[3],
+                    Category = categories[7],
+                    Tags = new List<Tag>()
+                    {
+                        tags[3]
+                    }
+                },
 
             };
 

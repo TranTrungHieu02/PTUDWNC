@@ -8,7 +8,6 @@ using TatBlog.Services.Blogs;
 using TatBlog.WinApp;
 using static Azure.Core.HttpHeader;
 
-#region Start
 //Tạo đối tượng DbContext để quản lý phiên làm việc với CSDL và trạng thái của các đối tượng
 var context = new BlogDbContext();
 
@@ -21,7 +20,6 @@ seeder.Initialize();
 //Tạo đối tượng BlogRepository
 IBlogRepository blogRepo = new BlogRepository(context);
 IAuthorRepository authorRepo = new AuthorRepository(context);
-#endregion
 
 #region Tag
 #region GetTagBySlug

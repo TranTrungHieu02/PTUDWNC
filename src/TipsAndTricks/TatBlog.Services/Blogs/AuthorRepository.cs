@@ -110,18 +110,31 @@ namespace TatBlog.Services.Blogs
       CancellationToken cancellationToken = default
     )
     {
-      Author authors = _context.Set<Author>()
-        .Include(a => a.Posts)
-        .OrderByDescending(a => a.Posts.Count(p => p.Published))
-        .First();
-
-      int maxPost = authors.Posts.Count(p => p.Published);
-
       return await _context.Set<Author>()
-        .Include(a => a.Posts)
-        .Where(a => a.Posts.Count(p => p.Published) == maxPost)
-        .Take(n)
-        .ToPagedListAsync(pagingParams, cancellationToken);
+                .Include (a => a.Posts)
+                .OrderByDescending (a => a.Posts.Count(p =>p.Published))
+                .Take(n)
+                .ToPagedListAsync(pagingParams, cancellationToken);
     }
-  }
+
+        public async Task<IList<AuthorItem>> GetAuthorAsync(CancellationToken cancellationToken = default)
+        {
+            IQueryable<Author> authors = _context.Set<Author>();
+            return await authors
+                .OrderBy(x => x.FullName)
+                .Select(x => new AuthorItem()
+                {
+                    Id = x.Id,
+                    FullName = x.FullName,
+                    UrlSlug = x.UrlSlug,
+                    ImageUrl = x.ImageUrl,
+                    JoinedDate = x.JoinedDate,
+                    Email = x.Email,
+                    Notes = x.Notes,
+                    PostsCount = x.Posts.Count(p => p.Published)
+                })
+                .OrderByDescending(s => s.PostsCount)
+                .ToListAsync(cancellationToken);
+        }
+    }
 }
