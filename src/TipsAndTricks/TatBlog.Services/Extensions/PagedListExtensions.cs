@@ -50,8 +50,8 @@ namespace TatBlog.Services.Extensions
 
         public static async Task<IPagedList<T>> ToPagedListAsync<T>(
             this IQueryable<T> source,
-            int pageNumber =1,
-            int pageSize =10,
+            int pageNumber = 1,
+            int pageSize = 10,
             string sortColumn = "Id",
             string sortOrder = "DESC",
             CancellationToken cancellationToken = default)
@@ -65,5 +65,7 @@ namespace TatBlog.Services.Extensions
 
             return new PagedList<T>(item, pageNumber, pageSize, totalCount);
         }
+
+        
     }
 }

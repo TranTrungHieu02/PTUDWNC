@@ -40,7 +40,7 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
         }
         private async Task PopulatePostFilterModelAsync(PostFilterModel model)
         {
-            var authors = await _authorRepository.GetAuthorAsync();
+            var authors = await _authorRepository.GetAuthorsAsync();
             var categories = await _blogRepository.GetCategoriesAsync();
 
             model.AuthorList = authors.Select(a => new SelectListItem()
@@ -56,7 +56,7 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
         }
         private async Task PopulatePostEditModelAsync(PostEditModel model)
         {
-            var authors = await _authorRepository.GetAuthorAsync();
+            var authors = await _authorRepository.GetAuthorsAsync();
             var categories = await _blogRepository.GetCategoriesAsync();
             model.AuthorList = authors.Select(a => new SelectListItem()
             {

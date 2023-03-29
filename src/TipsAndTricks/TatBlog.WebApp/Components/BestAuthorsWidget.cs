@@ -17,10 +17,10 @@ namespace TatBlog.WebApp.Components
             PageNumber = 1,
             PageSize = 4
         };
-        public async Task<IViewComponentResult> InvokeAsync()
-        {
-            var authors = await _authorRepository.GetNPopularAuthors(4, pagingParams);
-            return View(authors);
-        }
+        //public async Task<IViewComponentResult> InvokeAsync()
+        //{
+        //    var authors = await _authorRepository.GetNPopularAuthors(4, pagingParams);
+        //    return View(authors);
+        //}
     }
 }
