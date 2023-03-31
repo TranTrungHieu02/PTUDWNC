@@ -21,5 +21,9 @@ var app = builder.Build();
 
     app.MapAuthorEndpoints();
 
+    app.MapCategoryEndpoints();
+
+    app.MapPostEndpoint();   
+
     app.Run();
 }

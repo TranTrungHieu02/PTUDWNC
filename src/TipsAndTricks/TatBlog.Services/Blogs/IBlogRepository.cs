@@ -57,13 +57,21 @@ namespace TatBlog.Services.Blogs
 
         Task<bool> CheckExistCategorySlugAsync(string slug, CancellationToken cancellationToken = default);
 
-        Task AddOrUpdateCategoryAsync(Category category , CancellationToken cancellationToken = default);
+        Task<bool> AddOrUpdateCategoryAsync(Category category, CancellationToken cancellationToken = default);
 
         Task<bool> DeleteCategoryByIdAsync(int id, CancellationToken cancellationToken = default);
 
-        Task<IPagedList<CategoryItem>> GetPagedCategoriesAsync(
+        Task<IPagedList<CategoryItem>> GetPagedCategoryAsync(
+        IPagingParams pagingParams,
+        string name = null,
+        CancellationToken cancellationToken = default);
+
+        Task<IPagedList<T>> GetPagedCategoryAsync<T>(
+            Func<IQueryable<Category>, IQueryable<T>> mapper,
             IPagingParams pagingParams,
+            string name = null,
             CancellationToken cancellationToken = default);
+
 
         //Post
         Task<IList<PostItems>> GetPostInNMonthAsync(int month, CancellationToken cancellationToken = default);
@@ -81,6 +89,8 @@ namespace TatBlog.Services.Blogs
 
         Task<IList<Post>> FindPostByQueryAsync(PostQuery postQuery, CancellationToken cancellationToken = default);
 
+        Task<bool> DeletePostById(int id, CancellationToken cancellationToken = default);
+
         Task<IList<Post>> FindAllPostByQueryAsync(PostQuery postQuery, CancellationToken cancellationToken = default);
 
         Task<int> CountPostQueryAsync(PostQuery postQuery, CancellationToken cancellationToken= default);
@@ -90,5 +100,12 @@ namespace TatBlog.Services.Blogs
         Task<IPagedList<Post>> GetPagesAllPostQueryAsync(PostQuery postQuery, IPagingParams pagingParams, CancellationToken cancellationToken = default);
 
         Task<IPagedList<T>> GetPagesPostsAsync<T>(PostQuery postQuery, IPagingParams pagingParams, Func<IQueryable<Post>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
+
+        Task<Category> GetCachedCategoryByIdAsync(int categoryId);
+        Task<bool> IsCategoriesExistedSlugAsync(int categoryId, string slug, CancellationToken cancellationToken = default);
+
+        Task<Post> GetCachedPostById(int postId, bool postDetails = false, CancellationToken cancellationToken = default);
+
+        Task<bool> SetImageUrlAsync(int postsId, string imageUrl, CancellationToken cancellationToken = default);
     }
 }
