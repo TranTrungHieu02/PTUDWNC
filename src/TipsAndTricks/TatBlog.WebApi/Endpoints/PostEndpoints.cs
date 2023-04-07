@@ -22,8 +22,8 @@ namespace TatBlog.WebApi.Endpoints
             var routeGroupBuilder = app.MapGroup("/api/posts");
 
             routeGroupBuilder.MapGet("/", GetPosts)
-            .WithName("GetPosts")
-            .Produces<ApiResponse<PaginationResult<PostDto>>>();
+                .WithName("GetPosts")
+                .Produces<ApiResponse<PaginationResult<PostDto>>>();
 
             routeGroupBuilder.MapGet("/{id:int}", GetPostsDetailsById)
                 .WithName("GetPostsDetailsById")
@@ -31,10 +31,10 @@ namespace TatBlog.WebApi.Endpoints
 
 
             routeGroupBuilder.MapPost("/{id:int}/avatar", SetAvatarPost)
-            .WithName("SetAvatarPost")
-            .Accepts<IFormFile>("multipart/form-data")
-            .Produces(401)
-            .Produces<ApiResponse<string>>();
+                .WithName("SetAvatarPost")
+                .Accepts<IFormFile>("multipart/form-data")
+                .Produces(401)
+                .Produces<ApiResponse<string>>();
 
 
 
@@ -140,19 +140,12 @@ namespace TatBlog.WebApi.Endpoints
 
         private static async Task<IResult> GetFilteredPosts(
             [AsParameters] PostFilterModel model,
-            [AsParameters] PagingModel pagingModel,
+            IMapper mapper,
             IBlogRepository blogRepository)
         {
-            var postQuery = new PostQuery()
-            {
-                KeyWord = model.Keyword,
-                CategoryId = model.CategoryId,
-                AuthorId = model.AuthorId,
-                PostYear = model.Year,
-                PostMonth = model.Month,
-            };
-            var postsList = await blogRepository.GetPagesPostsAsync(
-                postQuery, pagingModel, posts => posts.ProjectToType<PostDto>());
+            var postQuery = mapper.Map<PostQuery>(model);
+            var postsList = await blogRepository.GetPagesPostsAsync(postQuery, model, posts =>
+            posts.ProjectToType<PostDto>());
             var paginationResult = new PaginationResult<PostDto>(postsList);
             return Results.Ok(ApiResponse.Success(paginationResult));
         }
@@ -201,8 +194,7 @@ namespace TatBlog.WebApi.Endpoints
                     post.ImageUrl = uploadedPath;
                 }
             }
-            await blogRepository.(post,
-            model.GetSelectedTags());
+            await blogRepository.AddOrUpdatePostAsync(post, model.GetSelectedTags());
 
             return Results.Ok(ApiResponse.Success(
             mapper.Map<PostItems>(post), HttpStatusCode.Created));
