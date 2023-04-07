@@ -88,8 +88,7 @@ namespace TatBlog.WebApi.Endpoints
         private static async Task<IResult> GetAuthorDetails(
           int id,
           IAuthorRepository authorRepository,
-          IMapper mapper,
-          ILogger<IResult> logger)
+          IMapper mapper)
         {
             var author = await authorRepository.GetCachedAuthorByIdAsync(id);
 
@@ -121,8 +120,7 @@ namespace TatBlog.WebApi.Endpoints
         private static async Task<IResult> GetPostsByAuthorSlug(
             [FromRoute] string slug,
             [AsParameters] PagingModel pagingModel,
-            IBlogRepository blogRepository,
-            ILogger<IResult> logger)
+            IBlogRepository blogRepository)
         {
             var postQuery = new PostQuery()
             {
@@ -135,14 +133,13 @@ namespace TatBlog.WebApi.Endpoints
 
             var paginationResult = new PaginationResult<PostDto>(posts);
             
-            return Results.Ok(paginationResult);
+            return Results.Ok(ApiResponse.Success(paginationResult));
         }
 
         private static async Task<IResult> AddAuthor(
             AuthorEditModel model,
             IAuthorRepository authorRepository,
-            IMapper mapper,
-            ILogger<IResult> logger)
+            IMapper mapper)
         {
             if (await authorRepository.IsAuthorSlugExistedAsync(0, model.UrlSlug))
             {
@@ -158,8 +155,7 @@ namespace TatBlog.WebApi.Endpoints
            int id,
            IFormFile imagefile,
            IAuthorRepository authorRepository,
-           IMediaManager mediaManager,
-           ILogger<IResult> logger)
+           IMediaManager mediaManager)
         {
             var imageUrl = await mediaManager.SaveFileAsync(
               imagefile.OpenReadStream(),
@@ -187,7 +183,8 @@ namespace TatBlog.WebApi.Endpoints
 
             if (await authorRepository.IsAuthorSlugExistedAsync(id, model.UrlSlug))
             {
-                return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{model.UrlSlug}' đã được sử dụng"));
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, 
+                    $"Slug '{model.UrlSlug}' đã được sử dụng"));
             }
             var author = mapper.Map<Author>(model);
             author.Id = id;
