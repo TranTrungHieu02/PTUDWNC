@@ -26,17 +26,15 @@ Route,
 function App() {
   return (
     <Router>
-      <Routes>
+      <Routes>         
+        <Route path='/400' element={<BadRequest />} />
+        <Route path='*' element={<NotFound />} />
         <Route path='/' element={<Layout />}>
           <Route path='/' element={<Index />} />
           <Route path='blog' element={<Index />} />
           <Route path='blog/Contact' element={<Contact />} />
           <Route path='blog/About' element={<About />} />
           <Route path='blog/RSS' element={<RSS />} />
-        </Route>
-        <Route>
-          <Route path='/400' element={<BadRequest />} />
-          <Route path='*' element={<NotFound />} />
         </Route>
         <Route path='/admin' element={<AdminLayout />} >
           <Route path='/admin' element={<AdminIndex.default />} />

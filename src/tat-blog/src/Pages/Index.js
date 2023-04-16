@@ -1,24 +1,23 @@
 import React, {useEffect, useState} from "react";
-import { useLocation } from "react-router-dom";
 import Pager from "../Components/Pager";
 import PostItem from '../Components/PostItem'
+
 import { getPosts } from "../Services/BlogRepository";
+import { useLocation } from "react-router-dom";
 
 const Index = () => {
   const[postList, setPostList] = useState([]);
   const [metadata, setMetaData] = useState({});
-
-  function useQuery(){
+ function useQuery(){
     const {search} = useLocation();
 
     return React.useMemo(() => 
     new URLSearchParams(search), [search]);
-  }
-
+}
   let query = useQuery(),
   k = query.get('k') ?? '',
   p = query.get('p') ?? 1,
-  ps = query.get('ps') ?? 5;
+  ps = query.get('ps') ?? 10;
 
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const Index = () => {
       else
         setPostList([]);
     })
-  }, [k, p, ps]);
+  }, [k, ps, p]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
