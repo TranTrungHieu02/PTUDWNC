@@ -1,3 +1,4 @@
+import { faUniversalAccess } from "@fortawesome/free-solid-svg-icons";
 import React, {useEffect, useState} from "react";
 import { useLocation } from "react-router-dom";
 
@@ -9,4 +10,12 @@ export function useQuery(){
 
     return React.useMemo(() => 
     new URLSearchParams(search), [search]);
+}
+export function decode(str) {
+    let txt = new DOMParser().parseFromString(str, "text/html");
+    return txt.documentElement.textContent;
+}
+
+export function isInteger(str) {
+    return Number.isInteger(Number(str)) && Number(str) >= 0;
 }

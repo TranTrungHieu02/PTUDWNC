@@ -21,6 +21,7 @@ BrowserRouter as Router,
 Routes,
 Route,
 } from 'react-router-dom';
+import Edit from './Pages/Admin/Post/Edit';
 
 
 function App() {
@@ -42,6 +43,8 @@ function App() {
           <Route path='/admin/categories' element={<Categories />} />
           <Route path='/admin/comments' element={<Comments />} />
           <Route path='/admin/posts' element={<Posts />} />
+          <Route path='/admin/posts/edit' element={<Edit />} />
+          <Route path='/admin/posts/edit/:id' element={<Edit />} />
           <Route path='/admin/tags' element={<Tags />} />
         </Route>
       </Routes>

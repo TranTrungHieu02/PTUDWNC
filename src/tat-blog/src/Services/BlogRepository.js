@@ -1,4 +1,4 @@
-import { get_api } from "./Methods";
+import { get_api, post_api } from "./Methods";
 
 export function getPosts(keyword = '',
   pageSize = 10,
@@ -21,7 +21,7 @@ export function getFilter() {
   }
 
 export function getPostsFilter(Keyword = '', authorId = '', categoryId = '',
-year = '', month  = '', pageSize = 10, PageNumber = 1, sortColumn = '', sortOrder = ''){
+year = '', month  = '', pageSize = 10, pageNumber = 1, sortColumn = '', sortOrder = ''){
   let url = new URL('https://localhost:7239/api/posts/get-posts-filter');
   Keyword !== '' && url.searchParams.append('Keyword', Keyword);
   authorId !== '' && url.searchParams.append('AuthorId', authorId);
@@ -30,7 +30,17 @@ year = '', month  = '', pageSize = 10, PageNumber = 1, sortColumn = '', sortOrde
   month !== '' && url.searchParams.append('Month', month);
   sortColumn !== '' && url.searchParams.append('SortColumn', sortColumn);
   sortOrder !== '' && url.searchParams.append('sortOrder', sortOrder);
-  url.searchParams.append('pageSize', pageSize);
-  url.searchParams.append('pageNumber', pageNumber);
+  url.searchParams.append('PageSize', pageSize);
+  url.searchParams.append('PageNumber', pageNumber);
   return get_api(url.href);
+}
+
+export async function getPostByID(id = 0){
+  if(id > 0)
+    return get_api('https://localhost:7239/api/posts/${id}');
+  return null;
+}
+
+export function addOrUpdatePost(fromData){
+    return post_api('https://localhost:7239/api/posts', fromData);
 }
