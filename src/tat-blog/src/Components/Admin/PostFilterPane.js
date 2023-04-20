@@ -26,13 +26,13 @@ const PostFilterPane = () => {
     useEffect(() => {
         getFilter().then(data => {
           if (data) {
-            setPostFilter({
+            setFilter({
               authorList: data.authorList,
               categoryList: data.categoryList,
               monthList: data.monthList
             });
         } else {
-          setPostFilter({
+          setFilter({
             authorList: [],
             categoryList: [],
             monthList: []
