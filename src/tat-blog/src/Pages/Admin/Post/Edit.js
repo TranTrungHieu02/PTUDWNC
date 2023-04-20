@@ -180,6 +180,30 @@ const Edit = () => {
                     </div>
                 </div>
                 <div className='row mb-3'>
+                    <Form.Label className='col-sm-2 col-form-label'>
+                        Chủ đề
+                    </Form.Label>
+                    <div className='col-sm-10'>
+                        <Form.Select
+                        name='categoryId'
+                        title='Category ID'
+                        value={post.category.id}
+                        required
+                        onChange={e => setPost({
+                            ...post,
+                            category: e.target.value
+                        })}
+                    >
+                        <option value=''>-- Chọn chủ đề --</option>
+                        {filter.categoryList.length > 0 &&
+                            filter.categoryList.map((item, index) =>
+                                <option key={index}
+                                value={item.value}>{item.text}</option>
+                                )}
+                    </Form.Select>
+                    </div>
+                </div>
+                <div className='row mb-3'>
                     <Form.Label classname='col-sm-2 col-form-label'>
                         Từ khóa (mỗi từ 1 dòng)
                     </Form.Label>
