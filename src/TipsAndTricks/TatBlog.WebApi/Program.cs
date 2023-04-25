@@ -23,7 +23,9 @@ var app = builder.Build();
 
     app.MapCategoryEndpoints();
 
-    app.MapPostEndpoint();   
+    app.MapPostEndpoint();
+
+    app.UseDataSeeder();
 
     app.Run();
 }
